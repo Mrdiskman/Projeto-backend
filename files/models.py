@@ -9,3 +9,7 @@ class Archive (models.Model):
     hour = models.CharField(max_length=150)
     store_owner = models.CharField(max_length=150)
     store_name = models.CharField(max_length=150)
+
+    def __str__(self): 
+        return self.store_name
+
