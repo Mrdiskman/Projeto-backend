@@ -2,11 +2,23 @@
 
 ## Projeto Realizado com:
   * Python, Django, djangorestframework
+  * 
+### Descrição
+O desafio consiste em parsear um arquivo de texto com a intenção de interpretalo e retornar uma tabela com os valores formatados com uma lista de transações e o valor total 
 
 ### Documentação
 
-Para inciar o projeto, é necessário ativar o ambiente virtual :
 
+**Atenção:** O pip deve estar instalado para verificar a versão atual basta utilizar o comando :
+
+```
+pip --version
+```
+
+Para inciar o projeto, é necessário instalar ativar o ambiente virtual :
+````
+python -m venv venv 
+````
 ````
 .\venv\Scripts\activate
 ````
