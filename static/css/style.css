@@ -1,0 +1,43 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.send{
+    margin-top: 20px;
+    background-color: #87c9af;
+    border: none;
+    width: 10%;
+    height: 50px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.file{
+    cursor: pointer;
+}
+.send:hover{
+    transition: 0.5s;
+    background-color: #5d917d;
+}
+
+.section_transactions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.table{
+    width: 80vw;
+    text-align: center;
+}
+
+.table tr th:first-child{
+    width: 10%
+}
+
+.table tr th:last-child{
+    width: 10%
+}

@@ -6,19 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{%static 'css/style.css'%}" type="text/css">
 </head>
 <body>
-    {%block content%}
-    <form enctype = "multipart/form-data", method="post">
-        {%csrf_token%}
-        <input  name="files" type="file" >
-        <button type="submit">enviar</button>
-    </form>
+    <main class="main-container">
+        <form method="post" enctype="multipart/form-data" class="form">
+          {% csrf_token %}
+          <div>
+            <label for="file_txt">Selecione o Arquivo</label>
+            <input type="file" name="files" class="file"/>
+          </div>
+          <button type="submit" class="send">Enviar</button>
+        </form>
+        <section class="section_transactions">
+            <h1>Resultados</h1>
+            {% for key_name, values in response.items %}
+            <table border="1" class="table">
+              <tr class="divisors">
+                <th class="names">Loja</th>
+                <th class="operations">Operações</th>
+                <th class="value_per_type">Total</th>
+              </tr>
 
-    <div>
-        <h1>transações</h1>
-        
-    </div>
-    {%endblock%}  
+              <tr>
+                <td class="names">{{ key_name }}</td>
+                {% for key_item, key_values in values.items %}
+                    {%if key_item == 'type'%}
+                        <td class="operations">
+                            {% for key_obj, key_obj_values in key_values.items %}
+                                {%if key_obj_values > 0 or key_obj_values < 0%}
+                                    {{key_obj | upper}}: <span class="value_per_type">R$ {{key_obj_values}},00</span>
+                                {%endif%}
+                            {% endfor %}
+                        </td>
+                        {% endif %}
+                {% endfor %}
+
+                {% for key_item, key_values in values.items %}
+                    {%if key_item == 'total_value'%}
+                        <td class="tot_value">R$ {{key_values}},00</td>
+                    {% endif %} 
+                {% endfor %}
+              </tr>
+
+            </table>
+            {% endfor %}
+          </section>
+      </main>
 </body>
 </html>

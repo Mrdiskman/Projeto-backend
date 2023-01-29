@@ -18,6 +18,7 @@ def home(req:Request):
         names = []
         list_transactions = []
         response = {}
+        type_names = ['Débito', 'Boleto', 'Financiamento', 'Crédito', 'Recebimento/Emprestimo', 'Vendas', 'Recebimento/TED', 'Recebimento/DOC', 'Aluguel']
 
         for data in modelData:
             if data.store_name not in names:
@@ -34,15 +35,44 @@ def home(req:Request):
         for objects in list_transactions:
             if objects["name"] not in response:
                response[objects["name"]]={}
-               response[objects["name"]]["type"] = []
+               response[objects["name"]]["type"] = {}
                response[objects["name"]]["total_value"] = 0
+
+               for assign_names in type_names:
+                    response[objects["name"]]["type"][assign_names] = 0
+           
             if (objects["type"] == 2) or (objects["type"] == 3) or (objects["type"] == 9): 
                 response[objects["name"]]["total_value"] -= objects["value"]
-                response[objects["name"]]["type"].append(objects["type"])
-            else : 
+                
+                if (objects["type"] == 2):
+                    response[objects["name"]]["type"]["Boleto"] -= objects["value"]
+                if (objects["type"] == 3):
+                    response[objects["name"]]["type"]["Financiamento"] -= objects["value"]
+                if (objects["type"] == 9):
+                    response[objects["name"]]["type"]["Aluguel"] -= objects["value"]
+                
+            else: 
                 response[objects["name"]]["total_value"] += objects["value"]
-                response[objects["name"]]["type"].append(objects["type"])
-        print(response)
+                if (objects["type"] == 1):
+                    response[objects["name"]]["type"]["Débito"] += objects["value"]
+
+                if (objects["type"] == 4):
+                    response[objects["name"]]["type"]["Crédito"] += objects["value"]
+
+                if (objects["type"] == 5):
+                    response[objects["name"]]["type"]["Recebimento/Emprestimo"] += objects["value"]
+
+                if (objects["type"] == 6):
+                    response[objects["name"]]["type"]["Vendas"] += objects["value"]
+
+                if (objects["type"] == 7):
+                    response[objects["name"]]["type"]["Recebimento/TED"] += objects["value"]
+
+                if (objects["type"] == 8):
+                    response[objects["name"]]["type"]["Recebimento/DOC"] += objects["value"]       
+        
+        context["response"] = response
+       
         return render(req, "home.html", context)
 
     return render(req, "home.html", context)
